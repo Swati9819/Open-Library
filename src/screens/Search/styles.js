@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     noSearch:{
+        width: Mixins.scaleSize(100),
         height: Mixins.scaleSize(100),
-        width: Mixins.scaleSize(100)
     },
     noSearchText:{
         fontWeight:'400',

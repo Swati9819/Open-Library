@@ -9,18 +9,30 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {parseSearchList} from './parser';
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import imageConstants from '../../utils/imageConstant';
 import {useNavigation} from '@react-navigation/native';
 
 export default function Search() {
   const navigation = useNavigation();
 
+  const textInputRef = useRef()
   const searchTextRef = useRef('');
   const searchTextTimerRef = useRef();
 
   const [searchText, setSearchText] = useState('');
   const [searchList, setSearchList] = useState([]);
+
+  useEffect(() => {
+    if (searchText == '') {
+      setTimeout(() => {
+        if (textInputRef.current) {
+          textInputRef.current.focus();
+        }
+      }, 300);
+    }
+
+  }, []);
 
   const onBackBtnClick = () => {
     navigation.goBack();
@@ -85,6 +97,9 @@ export default function Search() {
       <View style={styles.searchView}>
         <Image source={imageConstants.search} style={styles.icon} />
         <TextInput
+          ref={r => {
+            textInputRef.current = r
+          }}
           placeholder="Search book for title"
           value={searchText}
           onChangeText={handleChangeText}
@@ -100,12 +115,14 @@ export default function Search() {
         <Image source={imageConstants.back} style={styles.icon} />
       </TouchableOpacity>
       {renderSearch()}
-      {searchList?.length > 0 ? renderSearchList() : 
-      <View style={styles.noSearchView}>
-        <Image source={imageConstants.search} style={styles.noSearch}/>
-        <Text style={styles.noSearchText}>No Search Found</Text>
-      </View>
-      }
+      {searchList?.length > 0 ? (
+        renderSearchList()
+      ) : (
+        <View style={styles.noSearchView}>
+          <Image source={imageConstants.search} style={styles.noSearch} />
+          <Text style={styles.noSearchText}>No Search Found</Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 }

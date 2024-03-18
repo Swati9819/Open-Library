@@ -7,13 +7,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
-import { Colors } from '../../styles';
+import {Colors} from '../../styles';
 import {parseBookListData} from './parser';
 import React, {useEffect, useState} from 'react';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 export default function BookList() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const [showLoader, setShowLoader] = useState(false);
   const [getBookListData, setGetBookListData] = useState([]);
@@ -22,7 +22,7 @@ export default function BookList() {
   }, []);
 
   const fetchData = async () => {
-    setShowLoader(true)
+    setShowLoader(true);
     try {
       const resp = await fetch(
         'https://openlibrary.org/subjects/sci-fi.json?details=true',
@@ -30,16 +30,19 @@ export default function BookList() {
       const data = await resp.json();
       const getBookListFormatedData = parseBookListData(data);
       setGetBookListData(getBookListFormatedData);
-      setShowLoader(false)
+      setShowLoader(false);
     } catch (error) {
       console.log(error);
-      setShowLoader(false)
+      setShowLoader(false);
     }
   };
 
   const renderBookList = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => {navigation.navigate('BookDetail', {bookDetailObj : item})}}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('BookDetail', {bookDetailObj: item});
+        }}>
         <Text style={styles.bookText}>
           Book : <Text style={styles.subBookText}>{item?.title}</Text>
         </Text>
@@ -47,7 +50,8 @@ export default function BookList() {
           Author : <Text style={styles.subBookText}>{item?.authors}</Text>
         </Text>
         <Text style={styles.bookText}>
-          Publish Year : <Text style={styles.subBookText}>{item?.publishYear}</Text>
+          Publish Year :{' '}
+          <Text style={styles.subBookText}>{item?.publishYear}</Text>
         </Text>
         <Text style={styles.bookText}>
           Genre : <Text style={styles.subBookText}>{item?.genre}.</Text>
@@ -59,25 +63,25 @@ export default function BookList() {
   return (
     <SafeAreaView style={styles.mainView}>
       <Text style={styles.title}>Welcome to Open Library</Text>
-      {showLoader ? 
-       <View style={styles.loader}>
-       <ActivityIndicator size="large" color={Colors.COLOR_4984b8} />
-       <Text style={styles.loadingText}>
-        Please wait while we loading your Booklist !
-       </Text>
-     </View>
-      :
-      <View style={styles.subView}>
-        <FlatList
-          key={'bookList'}
-          data={getBookListData}
-          renderItem={renderBookList}
-          contentContainerStyle={styles.bookListView}
-          keyExtractor={(_, index) => index.toString()}
-          ItemSeparatorComponent={() => <View style={styles.separatorView} />}
-        />
-      </View>
-}
+      {showLoader ? (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color={Colors.COLOR_4984b8} />
+          <Text style={styles.loadingText}>
+            Please wait while we loading your Booklist !
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.subView}>
+          <FlatList
+            key={'bookList'}
+            data={getBookListData}
+            renderItem={renderBookList}
+            contentContainerStyle={styles.bookListView}
+            keyExtractor={(_, index) => index.toString()}
+            ItemSeparatorComponent={() => <View style={styles.separatorView} />}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 }

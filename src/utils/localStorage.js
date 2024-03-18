@@ -12,8 +12,4 @@ export default class AsyncStorageServices {
       }
     });
   }
-
-  static removeItem(key) {
-    return AsyncStorage.removeItem(key);
-  }
 }

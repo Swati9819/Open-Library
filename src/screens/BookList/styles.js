@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     },
     loader:{
         flex:1,
+        alignItems:'center', 
         justifyContent:'center',
-        alignItems:'center' 
     },
     loadingText:{
         fontWeight:'600',
