@@ -1,0 +1,13 @@
+export const COLOR_000000 = '#000000';
+export const COLOR_FFFFFF = '#FFFFFF';
+export const COLOR_E1DCC5 =  '#e1dcc5';
+export const COLOR_02598B =  '#02598b';
+export const COLOR_FFFFF4 =  '#fffff4';
+export const COLOR_F9F9F9 =  '#f9f9f9';
+export const COLOR_36454F =  '#36454F';
+export const COLOR_D3D3D3 =  '#D3D3D3';
+export const COLOR_848884 =  '#848884';
+export const COLOR_282828 =  '#282828';
+export const COLOR_202020 =  '#202020';
+export const COLOR_383838 =  '#383838';
+export const COLOR_4984b8 =  '#4984b8';
