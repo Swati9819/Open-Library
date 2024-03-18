@@ -185,6 +185,7 @@ export default function BookDeatil(props) {
       {showLoader ? (
         <View style={styles.loader}>
           <ActivityIndicator size="large" color={Colors.COLOR_4984b8} />
+          <Text style={styles.loadingText}>Loading</Text>
         </View>
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>

@@ -11,6 +11,13 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
     },
+    loadingText:{
+        fontWeight:'400',
+        textAlign:'center',
+        color: Colors.COLOR_202020,
+        fontSize:Mixins.scaleFont(20),
+        marginTop: Mixins.scaleSizeHeight(20) 
+    },
     ImageView:{
         marginTop: Mixins.scaleSizeHeight(10),
         marginBottom: Mixins.scaleSizeHeight(30),

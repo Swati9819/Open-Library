@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {parseSearchList} from './parser';
-import React, {useRef, useState, useEffect} from 'react';
 import imageConstants from '../../utils/imageConstant';
 import {useNavigation} from '@react-navigation/native';
+import React, {useRef, useState, useEffect} from 'react';
 
 export default function Search() {
   const navigation = useNavigation();
