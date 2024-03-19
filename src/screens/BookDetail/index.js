@@ -4,7 +4,6 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
-  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
@@ -13,6 +12,8 @@ import localStorage from '../../utils/localStorage';
 import imageConstants from '../../utils/imageConstant';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import AnimatedButton from '../../components/AnimatedButton';
 
 export default function BookDeatil(props) {
   const navigation = useNavigation();
@@ -90,6 +91,7 @@ export default function BookDeatil(props) {
 
     if (!isLiked) {
       let mergeLikedBookList;
+
       if (savedLikedBookListRef.current?.length > 0) {
         mergeLikedBookList = [
           ...savedLikedBookListRef.current,
@@ -98,6 +100,7 @@ export default function BookDeatil(props) {
       } else {
         mergeLikedBookList = [getBookDeatils.id];
       }
+
       await localStorage.setItem('likedBookList', mergeLikedBookList);
     } else {
       const filterLikedBookList = savedLikedBookListRef?.current?.filter(
@@ -153,26 +156,23 @@ export default function BookDeatil(props) {
     return (
       <View style={styles.ImageView}>
         <View style={styles.ImageHeaderView}>
-          <TouchableOpacity style={styles.iconView} onPress={onBackBtnClick}>
-            <Image source={imageConstants.back} style={styles.icon} />
-          </TouchableOpacity>
+          <AnimatedButton
+            icon={imageConstants.back}
+            onPress={onBackBtnClick}
+            key={'back'}
+          />
           <View style={styles.rightSideView}>
-            <TouchableOpacity style={styles.iconView} onPress={onLikeBtnClick}>
-              {isLiked ? (
-                <Image source={imageConstants.redHeart} style={styles.icon} />
-              ) : (
-                <Image source={imageConstants.heart} style={styles.icon} />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.iconView, styles.saveIconView]}
-              onPress={onBookmarkBtnClick}>
-              {bookmark ? (
-                <Image source={imageConstants.bookmark} style={styles.icon} />
-              ) : (
-                <Image source={imageConstants.save} style={styles.icon} />
-              )}
-            </TouchableOpacity>
+            <AnimatedButton
+              icon={isLiked ? imageConstants.redHeart : imageConstants.heart}
+              onPress={onLikeBtnClick}
+              key={'like'}
+            />
+            <AnimatedButton
+              icon={bookmark ? imageConstants.bookmark : imageConstants.save}
+              onPress={onBookmarkBtnClick}
+              key={'bookmark'}
+              viewStyle={styles.saveIconView}
+            />
           </View>
         </View>
         <Image source={{uri: thumbnailUrl}} style={styles.image} />
@@ -181,28 +181,30 @@ export default function BookDeatil(props) {
   };
 
   return (
-    <SafeAreaView style={styles.mainView}>
-      {showLoader ? (
-        <View style={styles.loader}>
-          <ActivityIndicator size="large" color={Colors.COLOR_4984b8} />
-          <Text style={styles.loadingText}>Loading</Text>
-        </View>
-      ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {renderBookImage()}
-          <View style={styles.bookDescView}>
-            <Text style={styles.title}>{getBookDeatils?.title ?? ''}</Text>
-            <Text style={styles.author}>
-              by {getBookDeatils?.authors ?? ''} |{' '}
-              {getBookDeatils?.publishYear ?? ''}
-            </Text>
-            {renderGenre()}
-            <Text style={styles.description}>
-              {bookDesc?.description ?? 'No description found!'}
-            </Text>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <SafeAreaView style={styles.mainView}>
+        {showLoader ? (
+          <View style={styles.loader}>
+            <ActivityIndicator size="large" color={Colors.COLOR_4984b8} />
+            <Text style={styles.loadingText}>Loading</Text>
           </View>
-        </ScrollView>
-      )}
-    </SafeAreaView>
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {renderBookImage()}
+            <View style={styles.bookDescView}>
+              <Text style={styles.title}>{getBookDeatils?.title ?? ''}</Text>
+              <Text style={styles.author}>
+                by {getBookDeatils?.authors ?? ''} |{' '}
+                {getBookDeatils?.publishYear ?? ''}
+              </Text>
+              {renderGenre()}
+              <Text style={styles.description}>
+                {bookDesc?.description ?? 'No description found!'}
+              </Text>
+            </View>
+          </ScrollView>
+        )}
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
