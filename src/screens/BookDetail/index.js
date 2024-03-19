@@ -88,7 +88,7 @@ export default function BookDeatil(props) {
 
   const onLikeBtnClick = async () => {
     setIsLiked(!isLiked);
-
+    getStoredList()
     if (!isLiked) {
       let mergeLikedBookList;
 
@@ -112,7 +112,7 @@ export default function BookDeatil(props) {
 
   const onBookmarkBtnClick = async () => {
     setBookmark(!bookmark);
-
+    getStoredList()
     if (!bookmark) {
       const currentBookDetail = {
         ...getBookDeatils,
@@ -175,7 +175,7 @@ export default function BookDeatil(props) {
             />
           </View>
         </View>
-        <Image source={{uri: thumbnailUrl}} style={styles.image} />
+        {thumbnailUrl && <Image source={{uri: thumbnailUrl}} style={styles.image} />}
       </View>
     );
   };
