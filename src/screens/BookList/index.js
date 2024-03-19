@@ -5,12 +5,14 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
+  Easing,
 } from 'react-native';
 import styles from './styles';
 import {Colors} from '../../styles';
 import {parseBookListData} from './parser';
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 
 export default function BookList() {
   const navigation = useNavigation();
@@ -39,6 +41,7 @@ export default function BookList() {
 
   const renderBookList = ({item}) => {
     return (
+      <Animated.View entering={FadeInUp}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('BookDetail', {bookDetailObj: item});
@@ -57,6 +60,7 @@ export default function BookList() {
           Genre : <Text style={styles.subBookText}>{item?.genre}.</Text>
         </Text>
       </TouchableOpacity>
+      </Animated.View>
     );
   };
 
