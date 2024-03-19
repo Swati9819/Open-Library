@@ -2,6 +2,9 @@ import { StyleSheet } from 'react-native';
 import { Mixins, Colors } from "../../styles"
 
 const styles = StyleSheet.create({
+    gestureView:{
+        flex:1,
+    },
     mainView:{
         flex:1,
         backgroundColor:Colors.COLOR_E1DCC5

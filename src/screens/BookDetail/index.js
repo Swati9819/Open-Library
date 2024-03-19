@@ -181,7 +181,7 @@ export default function BookDeatil(props) {
   };
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={styles.gestureView}>
       <SafeAreaView style={styles.mainView}>
         {showLoader ? (
           <View style={styles.loader}>
