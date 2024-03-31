@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  Easing,
 } from 'react-native';
 import styles from './styles';
 import {Colors} from '../../styles';
@@ -22,7 +21,7 @@ export default function BookList() {
   useEffect(() => {
     fetchData();
   }, []);
-
+  
   const fetchData = async () => {
     setShowLoader(true);
     try {
